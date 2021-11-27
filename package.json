@@ -10,7 +10,8 @@
     "postinstall": "remix setup node",
     "start": "remix-serve build",
     "watch:css": "postcss styles --base styles --dir app/styles -w",
-    "build:css": "postcss styles --base styles --dir app/styles --env production"
+    "build:css": "postcss styles --base styles --dir app/styles --env production",
+    "lint": "eslint \"*.{tsx,ts,jsx,js} **/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
@@ -22,14 +23,25 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^1.0.6",
-    "@types/react": "^17.0.24",
-    "@types/react-dom": "^17.0.9",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tailwindcss/forms": "^0.3.4",
-    "concurrently": "^6.4.0",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "autoprefixer": "^10.4.0",
+    "concurrently": "^6.4.0",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb": "^19.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "postcss": "^8.4.3",
     "postcss-cli": "^9.0.2",
+    "prettier": "^2.5.0",
     "tailwindcss": "^2.2.19",
     "typescript": "^4.1.2"
   },
