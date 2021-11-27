@@ -1,7 +1,6 @@
 import React from 'react';
 import type { LinksFunction } from 'remix';
 import {
-  Link,
   Links,
   LiveReload,
   Meta,
@@ -11,6 +10,8 @@ import {
   useCatch
 } from 'remix';
 import tailwindUrl from '~/styles/app.css';
+import SideNav from './components/LeftNav';
+import TopNav from './components/TopNav';
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindUrl }];
@@ -94,7 +95,7 @@ const Document = function ({
   title?: string;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full bg-gray-100">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -102,7 +103,7 @@ const Document = function ({
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="h-full">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -114,29 +115,15 @@ const Document = function ({
 
 const Layout = function ({ children }: { children: React.ReactNode }) {
   return (
-    <div className="remix-app">
-      <header>
-        <div>
-          <Link to="/" title="Home">
-            BA Starter
-          </Link>
-          <nav aria-label="Main navigation">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      <div>
-        <div>{children}</div>
+    <div className="min-h-full flex">
+      <SideNav />
+      <div className="flex flex-col min-h-screen flex-1">
+        <TopNav />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <footer>Footer</footer>
       </div>
-      <footer>
-        <div>
-          <p>Some Footer</p>
-        </div>
-      </footer>
     </div>
   );
 };
