@@ -1,3 +1,4 @@
+import type { LinksFunction } from "remix";
 import {
   Link,
   Links,
@@ -8,21 +9,12 @@ import {
   ScrollRestoration,
   useCatch
 } from "remix";
-import type { LinksFunction } from "remix";
+import tailwindUrl from "~/styles/app.css";
 
-import globalStylesUrl from "~/styles/global.css";
-import darkStylesUrl from "~/styles/dark.css";
 
 // https://remix.run/api/app#links
 export let links: LinksFunction = () => {
-  return [
-    { rel: "stylesheet", href: globalStylesUrl },
-    {
-      rel: "stylesheet",
-      href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)"
-    }
-  ];
+  return [{ rel: "stylesheet", href: tailwindUrl }];
 };
 
 // https://remix.run/api/conventions#default-export

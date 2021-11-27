@@ -4,27 +4,33 @@
   "description": "",
   "license": "",
   "scripts": {
+    "dev": "concurrently \"npm:watch:css\" \"npm:dev:web\"",
     "build": "remix build",
-    "dev": "remix dev",
+    "dev:web": "remix dev",
     "postinstall": "remix setup node",
-    "start": "remix-serve build"
+    "start": "remix-serve build",
+    "watch:css": "postcss styles --base styles --dir app/styles -w",
+    "build:css": "postcss styles --base styles --dir app/styles --env production"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
     "@remix-run/react": "^1.0.6",
     "@remix-run/serve": "^1.0.6",
-    "@tailwindcss/aspect-ratio": "^0.3.0",
-    "@tailwindcss/forms": "^0.3.4",
-    "concurrently": "^6.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remix": "^1.0.6",
-    "tailwindcss": "^2.2.19"
+    "remix": "^1.0.6"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.0.6",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "@tailwindcss/aspect-ratio": "^0.3.0",
+    "@tailwindcss/forms": "^0.3.4",
+    "concurrently": "^6.4.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.3",
+    "postcss-cli": "^9.0.2",
+    "tailwindcss": "^2.2.19",
     "typescript": "^4.1.2"
   },
   "engines": {
