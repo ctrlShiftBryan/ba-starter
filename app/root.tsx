@@ -29,6 +29,7 @@ export default function App() {
 
 // https://remix.run/docs/en/v1/api/conventions#errorboundary
 export const ErrorBoundary = function ({ error }: { error: Error }) {
+  // eslint-disable-next-line no-console
   console.error(error);
   return (
     <Document title="Error!">
