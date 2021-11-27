@@ -1,6 +1,6 @@
 [x] tailwind
 [ ] tailwind purge
 [x] eslint
-[ ] jest
-[ ] cypress
-[ ] react-testing lib
+[x] jest
+[x] cypress
+[x] react-testing lib
