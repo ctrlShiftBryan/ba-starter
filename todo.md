@@ -1,0 +1,6 @@
+- tailwind
+- tailwind purge
+- eslint
+- jest
+- cypress
+- react-testing lib
