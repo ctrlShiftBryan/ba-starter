@@ -7,6 +7,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    'jest/globals': true,
   },
   extends: [
     'plugin:react/recommended',
@@ -23,8 +24,10 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
+    'jest'
   ],
   rules: {
+    'import/extensions': [0],
     'comma-dangle': ['error', 'only-multiline'],
     'react/react-in-jsx-scope': [0],
     'react/jsx-filename-extension': [0],
