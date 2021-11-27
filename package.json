@@ -12,7 +12,10 @@
     "watch:css": "postcss styles --base styles --dir app/styles -w",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
     "lint": "eslint \"**/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern",
-    "cypress": "cypress open"
+    "cy:open": "cypress open",
+    "cypress": "start-server-and-test dev http://localhost:3000 cy:open",
+    "cy:run": "cypress run",
+    "cypress:ci": "start-server-and-test dev http://localhost:3000 cy:run"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
@@ -45,6 +48,7 @@
     "postcss": "^8.4.3",
     "postcss-cli": "^9.0.2",
     "prettier": "^2.5.0",
+    "start-server-and-test": "^1.14.0",
     "tailwindcss": "^2.2.19",
     "typescript": "^4.1.2"
   },

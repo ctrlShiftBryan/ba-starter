@@ -5,3 +5,4 @@ node_modules
 /public/build
 /app/styles
 yarn-error.log
+cypress/videos/*
