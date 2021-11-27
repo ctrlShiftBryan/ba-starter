@@ -34,4 +34,12 @@ module.exports = {
     'func-names': [0],
     'react/require-default-props': [0],
   },
+  overrides: [
+    {
+      files: ['cypress/**/*.ts'],
+      rules: {
+        'no-undef': [0]
+      }
+    }
+  ]
 };

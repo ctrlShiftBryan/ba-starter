@@ -11,7 +11,8 @@
     "start": "remix-serve build",
     "watch:css": "postcss styles --base styles --dir app/styles -w",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
-    "lint": "eslint \"*.{tsx,ts,jsx,js} **/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern"
+    "lint": "eslint \"*.{tsx,ts,jsx,js} **/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
@@ -31,6 +32,7 @@
     "@typescript-eslint/parser": "^5.4.0",
     "autoprefixer": "^10.4.0",
     "concurrently": "^6.4.0",
+    "cypress": "^9.1.0",
     "eslint": "^8.3.0",
     "eslint-config-airbnb": "^19.0.1",
     "eslint-config-prettier": "^8.3.0",
