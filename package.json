@@ -11,7 +11,7 @@
     "start": "remix-serve build",
     "watch:css": "postcss styles --base styles --dir app/styles -w",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
-    "lint": "eslint \"*.{tsx,ts,jsx,js} **/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern",
+    "lint": "eslint \"**/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern",
     "cypress": "cypress open"
   },
   "dependencies": {

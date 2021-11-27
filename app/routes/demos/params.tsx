@@ -1,7 +1,7 @@
-import { useCatch, Link, json, useLoaderData, Outlet } from "remix";
+import { Link, Outlet } from 'remix';
 
 export function meta() {
-  return { title: "Boundaries Demo" };
+  return { title: 'Boundaries Demo' };
 }
 
 export default function Boundaries() {
@@ -19,12 +19,16 @@ export default function Boundaries() {
           </li>
           <li>
             <Link to="one">
-              Param: <i>one</i>
+              Param:
+              {' '}
+              <i>one</i>
             </Link>
           </li>
           <li>
             <Link to="two">
-              Param: <i>two</i>
+              Param:
+              {' '}
+              <i>two</i>
             </Link>
           </li>
           <li>

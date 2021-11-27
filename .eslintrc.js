@@ -1,6 +1,7 @@
 module.exports = {
   ignorePatterns: [
     '/build/*',
+    '/public/*',
   ],
   env: {
     browser: true,
@@ -33,7 +34,10 @@ module.exports = {
     'react/function-component-definition': [0],
     'func-names': [0],
     'react/require-default-props': [0],
+    'react/no-unescaped-entities': [0],
+    'no-fallthrough': [0],
   },
+
   overrides: [
     {
       files: ['cypress/**/*.ts'],
