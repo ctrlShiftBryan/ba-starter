@@ -11,6 +11,7 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
+    'plugin:tailwindcss/recommended',
     'airbnb',
   ],
   parser: '@typescript-eslint/parser',
@@ -24,7 +25,8 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
-    'jest'
+    'jest',
+    'tailwindcss'
   ],
   rules: {
     'import/extensions': [0],

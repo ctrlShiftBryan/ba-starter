@@ -115,9 +115,9 @@ const Document = function ({
 
 const Layout = function ({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-full flex">
+    <div className="flex min-h-full">
       <SideNav />
-      <div className="flex flex-col min-h-screen flex-1">
+      <div className="flex flex-col flex-1 min-h-screen">
         <TopNav />
         <main className="flex-grow">
           {children}
