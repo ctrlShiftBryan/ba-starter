@@ -1,7 +1,84 @@
+/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useSearchParams } from 'remix';
+import { ActionFunction, useActionData, useSearchParams } from 'remix';
+import { db } from '~/utils/db.server';
 
+type ActionData = {
+  formError?: string;
+  fieldErrors?: {
+    username: string | undefined;
+    password: string | undefined;
+  };
+  fields?: {
+    loginType: string;
+    username: string;
+    password: string;
+  };
+};
+function validateUsername(username: unknown) {
+  if (typeof username !== 'string' || username.length < 3) {
+    return 'Usernames must be at least 3 characters long';
+  }
+}
+
+function validatePassword(password: unknown) {
+  if (typeof password !== 'string' || password.length < 6) {
+    return 'Passwords must be at least 6 characters long';
+  }
+}
+
+export const action: ActionFunction = async ({
+  request
+}): Promise<Response | ActionData> => {
+  const form = await request.formData();
+  const loginType = form.get('loginType');
+  const username = form.get('username');
+  const password = form.get('password');
+  const redirectTo = form.get('redirectTo');
+  if (
+    typeof loginType !== 'string'
+    || typeof username !== 'string'
+    || typeof password !== 'string'
+    || typeof redirectTo !== 'string'
+  ) {
+    return { formError: 'Form not submitted correctly.' };
+  }
+
+  const fields = { loginType, username, password };
+  const fieldErrors = {
+    username: validateUsername(username),
+    password: validatePassword(password)
+  };
+  if (Object.values(fieldErrors).some(Boolean)) return { fieldErrors, fields };
+
+  switch (loginType) {
+    case 'login': {
+      // login to get the user
+      // if there's no user, return the fields and a formError
+      // if there is a user, create their session and redirect to /jokes
+      return { fields, formError: 'Not implemented' };
+    }
+    case 'register': {
+      const userExists = await db.user.findFirst({
+        where: { username }
+      });
+      if (userExists) {
+        return {
+          fields,
+          formError: `User with username ${username} already exists`
+        };
+      }
+      // create the user
+      // create their session and redirect to /jokes
+      return { fields, formError: 'Not implemented' };
+    }
+    default: {
+      return { fields, formError: 'Login type invalid' };
+    }
+  }
+};
 export default function Login() {
+  const actionData = useActionData<ActionData | undefined>();
   const [searchParams] = useSearchParams();
   return (
     <div className="p-2 m-5 bg-white rounded border shadow">
@@ -25,7 +102,10 @@ export default function Login() {
                 type="radio"
                 name="loginType"
                 value="login"
-                defaultChecked
+                defaultChecked={
+                  !actionData?.fields?.loginType
+                  || actionData?.fields?.loginType === 'login'
+                }
               />
               {' '}
               Login
@@ -36,6 +116,10 @@ export default function Login() {
                 type="radio"
                 name="loginType"
                 value="register"
+                defaultChecked={
+                  actionData?.fields?.loginType
+                  === 'register'
+                }
               />
               {' '}
               Register
@@ -48,7 +132,24 @@ export default function Login() {
               id="username"
               name="username"
               className="block flex-1 w-full min-w-0 sm:text-sm rounded border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+              aria-invalid={Boolean(
+                actionData?.fieldErrors?.username
+              )}
+              aria-describedby={
+                actionData?.fieldErrors?.username
+                  ? 'username-error'
+                  : undefined
+              }
             />
+            {actionData?.fieldErrors?.username ? (
+              <p
+                className="py-2 text-xs text-red-400"
+                role="alert"
+                id="username-error"
+              >
+                {actionData?.fieldErrors.username}
+              </p>
+            ) : null}
           </div>
           <div className="m-2">
             <label htmlFor="password" className="block sm:pt-2 sm:mt-px text-sm font-medium text-gray-700">Password</label>
@@ -57,7 +158,36 @@ export default function Login() {
               name="password"
               type="password"
               className="block flex-1 w-full min-w-0 sm:text-sm rounded border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+              aria-invalid={
+                Boolean(
+                  actionData?.fieldErrors?.password
+                ) || undefined
+              }
+              aria-describedby={
+                actionData?.fieldErrors?.password
+                  ? 'password-error'
+                  : undefined
+              }
             />
+            {actionData?.fieldErrors?.password ? (
+              <p
+                className="py-2 text-xs text-red-400"
+                role="alert"
+                id="password-error"
+              >
+                {actionData?.fieldErrors.password}
+              </p>
+            ) : null}
+          </div>
+          <div id="form-error-message">
+            {actionData?.formError ? (
+              <p
+                className="py-2 m-2 text-xs text-red-400"
+                role="alert"
+              >
+                {actionData?.formError}
+              </p>
+            ) : null}
           </div>
           <button type="submit" className="inline-flex justify-center py-2 px-4 m-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm focus:outline-none">
             Submit
