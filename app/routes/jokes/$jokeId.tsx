@@ -1,7 +1,7 @@
 import type { Joke } from '@prisma/client';
 import {
   ActionFunction,
-  LoaderFunction, redirect, useCatch, useLoaderData, useParams
+  LoaderFunction, MetaFunction, redirect, useCatch, useLoaderData, useParams
 } from 'remix';
 import { db } from '~/utils/db.server';
 import { getUserId, requireUserId } from '~/utils/session.server';
@@ -121,4 +121,20 @@ export const ErrorBoundary = function ({ error }: { error: Error }) {
       </div>
     </div>
   );
+};
+export const meta: MetaFunction = ({
+  data
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return {
+      title: 'No joke',
+      description: 'No joke found'
+    };
+  }
+  return {
+    title: `"${data.joke?.name}" joke`,
+    description: `Enjoy the "${data.joke?.name}" joke and much more`
+  };
 };

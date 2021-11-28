@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import {
-  ActionFunction, LoaderFunction, redirect, useActionData, useSearchParams
+  ActionFunction, LoaderFunction, MetaFunction, redirect, useActionData, useSearchParams
 } from 'remix';
 import { db } from '~/utils/db.server';
 import {
@@ -223,3 +223,9 @@ export default function Login() {
     </div>
   );
 }
+
+export const meta: MetaFunction = () => ({
+  title: 'Remix Jokes | Login',
+  description:
+      'Login to submit your own jokes to Remix Jokes!'
+});

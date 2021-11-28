@@ -2,6 +2,7 @@ import { Joke, User } from '@prisma/client';
 import React from 'react';
 import {
   Links, LinksFunction, LiveReload, LoaderFunction, Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -96,8 +97,8 @@ const Document = function ({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {title ? <title>{title}</title> : null}
         <Meta />
+        {title ? <title>{title}</title> : null}
         <Links />
       </head>
       <body className="h-full">
@@ -142,4 +143,18 @@ const Layout = function ({ children, data }: { children: React.ReactNode, data: 
       </div>
     </div>
   );
+};
+
+export const meta: MetaFunction = () => {
+  const description = 'Learn Remix and laugh at the same time!';
+  return {
+    description,
+    keywords: 'Remix,jokes',
+    'twitter:image': 'https://remix-jokes.lol/social.png',
+    'twitter:card': 'summary_large_image',
+    'twitter:creator': '@remix_run',
+    'twitter:site': '@remix_run',
+    'twitter:title': 'Remix Jokes',
+    'twitter:description': description
+  };
 };

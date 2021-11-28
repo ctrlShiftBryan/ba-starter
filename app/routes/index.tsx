@@ -7,8 +7,9 @@ import type { MetaFunction } from 'remix';
 
 // https://remix.run/api/conventions#meta
 export const meta: MetaFunction = () => ({
-  title: 'BA Remix Starter',
-  description: 'Welcome to remix!'
+  title: "Remix: So great, it's funny!",
+  description:
+      'Remix jokes app. Learn Remix and laugh at the same time!'
 });
 
 // https://remix.run/guides/routing#index-routes
