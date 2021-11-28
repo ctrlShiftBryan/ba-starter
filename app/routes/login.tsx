@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { ActionFunction, useActionData, useSearchParams } from 'remix';
 import { db } from '~/utils/db.server';
+import { createUserSession, login } from '~/utils/session.server';
 
 type ActionData = {
   formError?: string;
@@ -45,6 +46,7 @@ export const action: ActionFunction = async ({
   }
 
   const fields = { loginType, username, password };
+  console.log({ fields });
   const fieldErrors = {
     username: validateUsername(username),
     password: validatePassword(password)
@@ -53,10 +55,14 @@ export const action: ActionFunction = async ({
 
   switch (loginType) {
     case 'login': {
-      // login to get the user
-      // if there's no user, return the fields and a formError
-      // if there is a user, create their session and redirect to /jokes
-      return { fields, formError: 'Not implemented' };
+      const user = await login({ username, password });
+      if (!user) {
+        return {
+          fields,
+          formError: 'Username/Password combination is incorrect'
+        };
+      }
+      return createUserSession(user.id, redirectTo);
     }
     case 'register': {
       const userExists = await db.user.findFirst({
@@ -131,6 +137,7 @@ export default function Login() {
               type="text"
               id="username"
               name="username"
+              defaultValue={actionData?.fields?.username}
               className="block flex-1 w-full min-w-0 sm:text-sm rounded border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
               aria-invalid={Boolean(
                 actionData?.fieldErrors?.username
@@ -156,6 +163,7 @@ export default function Login() {
             <input
               id="password"
               name="password"
+              defaultValue={actionData?.fields?.password}
               type="password"
               className="block flex-1 w-full min-w-0 sm:text-sm rounded border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
               aria-invalid={
