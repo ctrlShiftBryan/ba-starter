@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { ActionFunction, redirect, useActionData } from 'remix';
 import { db } from '~/utils/db.server';
+import { requireUserId } from '~/utils/session.server';
 
 function validateJokeName(name: string) {
   if (name.length < 3) {
@@ -21,6 +22,7 @@ type ActionData = {
 }
 
 export const action: ActionFunction = async ({ request }): Promise<Response | ActionData> => {
+  const userId = await requireUserId(request);
   const form = await request.formData();
   const name = form.get('name');
   const content = form.get('content');
@@ -38,11 +40,9 @@ export const action: ActionFunction = async ({ request }): Promise<Response | Ac
   if (Object.values(fieldErrors).some(Boolean)) {
     return { fieldErrors, fields: { name, content } };
   }
-
+  const fields = { name, content };
   const joke = await db.joke.create({
-    data: {
-      name, content
-    }
+    data: { ...fields, jokesterId: userId }
   });
 
   return redirect(`/jokes/${joke.id}`);
