@@ -5,7 +5,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch, useLoaderData
+  useCatch,
+  useLoaderData
 } from 'remix';
 import tailwindUrl from '~/styles/app.css';
 import SideNav from './components/LeftNav';
@@ -19,9 +20,10 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindUr
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 export default function App() {
+  const data = useLoaderData<LoaderData>();
   return (
     <Document>
-      <Layout>
+      <Layout data={data}>
         <Outlet />
       </Layout>
     </Document>
@@ -34,15 +36,10 @@ export const ErrorBoundary = function ({ error }: { error: Error }) {
   console.error(error);
   return (
     <Document title="Error!">
-      <Layout>
+      <Layout data={{ user: null, jokeListItems: [] }}>
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
-          <hr />
-          <p>
-            Hey, developer, you should replace this with what you want your
-            users to see.
-          </p>
         </div>
       </Layout>
     </Document>
@@ -75,7 +72,7 @@ export const CatchBoundary = function () {
 
   return (
     <Document title={`${caught.status} ${caught.statusText}`}>
-      <Layout>
+      <Layout data={{ user: null, jokeListItems: [] }}>
         <h1>
           {caught.status}
           :
@@ -126,12 +123,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     jokeListItems
   };
 };
+
 type LoaderData = {
   user: User | null;
   jokeListItems: Array<Joke>;
 };
-const Layout = function ({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData<LoaderData>();
+
+const Layout = function ({ children, data }: { children: React.ReactNode, data: LoaderData }) {
   return (
     <div className="flex min-h-full">
       <SideNav jokes={data.jokeListItems} user={data.user} />
