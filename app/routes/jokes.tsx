@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { LoaderFunction, Outlet } from 'remix';
 import { db } from '~/utils/db.server';
 
