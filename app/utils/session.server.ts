@@ -69,6 +69,16 @@ export async function requireUserId(
   return userId;
 }
 
+export async function register({
+  username,
+  password
+}: LoginForm) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  return db.user.create({
+    data: { username, passwordHash }
+  });
+}
+
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
   if (typeof userId !== 'string') {
