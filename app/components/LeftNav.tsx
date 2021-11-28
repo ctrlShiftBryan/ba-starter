@@ -1,3 +1,4 @@
+import { Joke } from '@prisma/client';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'remix';
 
@@ -8,7 +9,11 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function SideNav() {
+type Props = {
+  jokes: Joke[]
+}
+
+export default function SideNav({ jokes }: Props) {
   const location = useLocation();
   const data: IndexData = {
     demos: [
@@ -17,10 +22,20 @@ export default function SideNav() {
         name: 'Jokes',
         current: false
       },
-
+      ...jokes.map((joke) => ({
+        to: `/jokes/${joke.id}`,
+        name: joke.name,
+        current: false
+      })),
       {
         to: '/jokes/new',
         name: 'New Joke',
+        current: false
+      },
+
+      {
+        to: '/jokes ',
+        name: 'Random Joke',
         current: false
       },
     ].map((l) => ({ ...l, current: location.pathname === l.to }))

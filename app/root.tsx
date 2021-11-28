@@ -1,17 +1,16 @@
+import { Joke } from '@prisma/client';
 import React from 'react';
-import type { LinksFunction } from 'remix';
 import {
-  Links,
-  LiveReload,
-  Meta,
+  Links, LinksFunction, LiveReload, LoaderFunction, Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch, useLoaderData
 } from 'remix';
 import tailwindUrl from '~/styles/app.css';
 import SideNav from './components/LeftNav';
 import TopNav from './components/TopNav';
+import { db } from './utils/db.server';
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindUrl }];
@@ -113,11 +112,21 @@ const Document = function ({
   );
 };
 
+export const loader: LoaderFunction = async () => {
+  const jokes = await db.joke.findMany({
+    take: 5,
+    orderBy: { createdAt: 'desc' },
+    select: { id: true, name: true }
+  });
+  return jokes;
+};
+
 const Layout = function ({ children }: { children: React.ReactNode }) {
+  const jokes = useLoaderData<Joke[]>();
   return (
-    <div className="min-h-full flex">
-      <SideNav />
-      <div className="flex flex-col min-h-screen flex-1">
+    <div className="flex min-h-full">
+      <SideNav jokes={jokes} />
+      <div className="flex flex-col flex-1 min-h-screen">
         <TopNav />
         <main className="flex-grow">
           {children}
