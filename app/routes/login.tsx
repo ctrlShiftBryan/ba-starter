@@ -1,8 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { ActionFunction, useActionData, useSearchParams } from 'remix';
+import {
+  ActionFunction, LoaderFunction, redirect, useActionData, useSearchParams
+} from 'remix';
 import { db } from '~/utils/db.server';
-import { createUserSession, login } from '~/utils/session.server';
+import { createUserSession, getUser, login } from '~/utils/session.server';
 
 type ActionData = {
   formError?: string;
@@ -16,6 +18,7 @@ type ActionData = {
     password: string;
   };
 };
+
 function validateUsername(username: unknown) {
   if (typeof username !== 'string' || username.length < 3) {
     return 'Usernames must be at least 3 characters long';
@@ -46,7 +49,6 @@ export const action: ActionFunction = async ({
   }
 
   const fields = { loginType, username, password };
-  console.log({ fields });
   const fieldErrors = {
     username: validateUsername(username),
     password: validatePassword(password)
@@ -83,6 +85,15 @@ export const action: ActionFunction = async ({
     }
   }
 };
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request);
+  if (user !== null) {
+    return redirect('/jokes');
+  }
+  return null;
+};
+
 export default function Login() {
   const actionData = useActionData<ActionData | undefined>();
   const [searchParams] = useSearchParams();

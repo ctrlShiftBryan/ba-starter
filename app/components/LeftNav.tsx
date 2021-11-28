@@ -1,4 +1,4 @@
-import { Joke } from '@prisma/client';
+import { Joke, User } from '@prisma/client';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'remix';
 
@@ -10,10 +10,11 @@ function classNames(...classes: string[]) {
 }
 
 type Props = {
-  jokes: Joke[]
+  jokes: Joke[];
+  user: User | null;
 }
 
-export default function SideNav({ jokes }: Props) {
+export default function SideNav({ jokes, user }: Props) {
   const location = useLocation();
   const data: IndexData = {
     demos: [
@@ -43,6 +44,21 @@ export default function SideNav({ jokes }: Props) {
   return (
     <div className="hidden sm:block w-64 bg-indigo-200">
       <ul className="flex-1 px-2 mt-5 space-y-1">
+        {user ? (
+          <div className="flex">
+            <span>{`Hi ${user.username}`}</span>
+            <form action="/logout" method="post">
+              <button
+                type="submit"
+                className="inline-flex justify-center py-1 px-1 ml-2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm focus:outline-none"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
         {data.demos.map((demo) => (
           <li key={demo.to}>
             <Link

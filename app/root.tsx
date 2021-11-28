@@ -1,4 +1,4 @@
-import { Joke } from '@prisma/client';
+import { Joke, User } from '@prisma/client';
 import React from 'react';
 import {
   Links, LinksFunction, LiveReload, LoaderFunction, Meta,
@@ -11,6 +11,7 @@ import tailwindUrl from '~/styles/app.css';
 import SideNav from './components/LeftNav';
 import TopNav from './components/TopNav';
 import { db } from './utils/db.server';
+import { getUser } from './utils/session.server';
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindUrl }];
@@ -112,20 +113,28 @@ const Document = function ({
   );
 };
 
-export const loader: LoaderFunction = async () => {
-  const jokes = await db.joke.findMany({
+export const loader: LoaderFunction = async ({ request }) => {
+  const jokeListItems = await db.joke.findMany({
     take: 5,
     orderBy: { createdAt: 'desc' },
     select: { id: true, name: true }
   });
-  return jokes;
-};
+  const user = await getUser(request);
 
+  return {
+    user,
+    jokeListItems
+  };
+};
+type LoaderData = {
+  user: User | null;
+  jokeListItems: Array<Joke>;
+};
 const Layout = function ({ children }: { children: React.ReactNode }) {
-  const jokes = useLoaderData<Joke[]>();
+  const data = useLoaderData<LoaderData>();
   return (
     <div className="flex min-h-full">
-      <SideNav jokes={jokes} />
+      <SideNav jokes={data.jokeListItems} user={data.user} />
       <div className="flex flex-col flex-1 min-h-screen">
         <TopNav />
         <main className="flex-grow">
