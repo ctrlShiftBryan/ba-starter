@@ -41,10 +41,10 @@ export default function SideNav({ jokes }: Props) {
     ].map((l) => ({ ...l, current: location.pathname === l.to }))
   };
   return (
-    <div className="hidden w-64 bg-indigo-200 sm:block">
+    <div className="hidden sm:block w-64 bg-indigo-200">
       <ul className="flex-1 px-2 mt-5 space-y-1">
         {data.demos.map((demo) => (
-          <li key={demo.to} className="remix__page__resource">
+          <li key={demo.to}>
             <Link
               to={demo.to}
               prefetch="intent"

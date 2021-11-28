@@ -1,4 +1,4 @@
-import { Link, LoaderFunction, Outlet } from 'remix';
+import { LoaderFunction, Outlet } from 'remix';
 import { db } from '~/utils/db.server';
 
 export const loader: LoaderFunction = async () => {
@@ -12,10 +12,7 @@ export default function JokesRoute() {
       <h1>J🤪KES</h1>
       <main>
         <div className="container">
-          <div className="jokes-list">
-          </div>
-
-          <div className="jokes-outlet">
+          <div>
             <Outlet />
           </div>
         </div>
