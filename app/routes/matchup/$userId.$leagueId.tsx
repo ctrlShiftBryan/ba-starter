@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 import {
   ActionFunction, LoaderFunction, Outlet, redirect, useLoaderData
@@ -74,7 +75,6 @@ export const action: ActionFunction = async ({ request, params }): Promise<Respo
   if (userId2) {
     return redirect(`/matchup/${userId}/${leagueId}/${userId2}`);
   }
-  // return { fields: { ...fields, userId } };
 };
 
 export default function Index() {
