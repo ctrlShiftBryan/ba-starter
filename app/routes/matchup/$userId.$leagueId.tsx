@@ -88,6 +88,7 @@ export default function Index() {
           <div>{league?.name }</div>
           <div>{user?.display_name }</div>
           <div>{points}</div>
+          <a href="/matchup">Change</a>
         </div>
 
       </div>

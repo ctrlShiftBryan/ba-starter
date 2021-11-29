@@ -36,7 +36,7 @@ export default function Index() {
           }
         </select>
       </label>
-      <input type="submit" className="hidden" />
+      <button type="submit">Submit</button>
     </form>
   );
 }

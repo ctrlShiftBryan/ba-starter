@@ -37,7 +37,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     leagues: leagues.map((l: any) => {
       const { name, league_id } = l;
       return { name, league_id };
-    })
+    }),
+    params
   };
 };
 export default function LeagueId2() {
@@ -49,6 +50,7 @@ export default function LeagueId2() {
       <div>{league?.name }</div>
       <div>{user?.display_name }</div>
       <div>{points}</div>
+      <a href={`/matchup/${actionData.params.userId}/${actionData.params.leagueId}`}>Change</a>
     </div>
   );
 }

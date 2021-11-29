@@ -1,14 +1,18 @@
 export default function Index() {
   return (
-    <form method="post">
-      <label htmlFor="username2">
-        <span>User Name 1</span>
-        <input
-          type="text"
-          name="username2"
-        />
-      </label>
-
-    </form>
+    <main>
+      <form method="post" className="flex flex-col text-left">
+        <label htmlFor="username2">
+          <span>Enter the 2nd sleeper user id</span>
+          <br />
+          <input
+            type="text"
+            name="username2"
+            id="username2"
+          />
+        </label>
+        <button type="submit">Ok</button>
+      </form>
+    </main>
   );
 }

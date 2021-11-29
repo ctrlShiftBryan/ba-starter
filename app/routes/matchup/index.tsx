@@ -29,15 +29,18 @@ export default function Index() {
   return (
     <div>
       <main>
-        <form method="post" action="/matchup?index">
+        <form method="post" action="/matchup?index" className="flex flex-col text-left">
           <label htmlFor="username1">
-            <span>User Name 1</span>
+            <span>Enter the first sleeper user id</span>
+            <br />
             <input
               type="text"
               name="username1"
+              id="username1"
               defaultValue={actionData?.fields?.username1}
             />
           </label>
+          <button type="submit">Ok</button>
         </form>
       </main>
     </div>
