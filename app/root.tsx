@@ -1,5 +1,5 @@
 import React from 'react';
-import type { LinksFunction } from 'remix';
+import type { ActionFunction, LinksFunction } from 'remix';
 import {
   Links,
   LiveReload,
@@ -10,12 +10,16 @@ import {
   useCatch
 } from 'remix';
 import tailwindUrl from '~/styles/app.css';
-import SideNav from './components/LeftNav';
 import TopNav from './components/TopNav';
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindUrl }];
 
+export const action: ActionFunction = async ({ request }): Promise<Response | any> => {
+  console.log(request);
+
+  return true;
+};
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 export default function App() {
