@@ -5,7 +5,7 @@ export default function JokesRoute() {
     <div className="m-2 text-lg text-indigo-900">
       <main>
         <div className="container">
-          <div>
+          <div className="flex">
             <Outlet />
           </div>
         </div>

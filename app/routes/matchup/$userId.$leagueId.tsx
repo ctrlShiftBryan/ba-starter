@@ -80,27 +80,19 @@ export const action: ActionFunction = async ({ request, params }): Promise<Respo
 export default function Index() {
   const actionData = useLoaderData<ActionData>();
   const league = actionData.leagues.find((l) => l.league_id === actionData.leagueId);
-  console.log(actionData);
   const { user, points } = actionData;
   return (
-    <div className="flex">
-      <div>
-        <div>{league?.name }</div>
-        <div>{user?.display_name }</div>
-        <div>{points}</div>
+    <>
+      <div className="flex-1">
+        <div>
+          <div>{league?.name }</div>
+          <div>{user?.display_name }</div>
+          <div>{points}</div>
+        </div>
+
       </div>
 
-      <form method="post">
-        <label htmlFor="username2">
-          <span>User Name 1</span>
-          <input
-            type="text"
-            name="username2"
-          />
-        </label>
-
-        <Outlet />
-      </form>
-    </div>
+      <Outlet />
+    </>
   );
 }

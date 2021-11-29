@@ -6,3 +6,5 @@ node_modules
 /app/styles/*
 cypress/videos/*
 yarn-error.log
+.env
+/prisma/dev.db

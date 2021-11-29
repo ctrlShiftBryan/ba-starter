@@ -15,11 +15,7 @@ import TopNav from './components/TopNav';
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindUrl }];
 
-export const action: ActionFunction = async ({ request }): Promise<Response | any> => {
-  console.log(request);
-
-  return true;
-};
+export const action: ActionFunction = async ({ request }): Promise<Response | any> => true;
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 export default function App() {

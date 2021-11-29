@@ -1,32 +1,25 @@
 /* eslint-disable camelcase */
+
 import { LoaderFunction, redirect, useLoaderData } from 'remix';
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const { userId } = params;
   const url = new URL(request.url);
-  const leagueId = url.searchParams.get('leagueid1');
-  const url2 = `https://api.sleeper.app/v1/user/${userId}/leagues/nfl/2021`;
-  const res = await fetch(url2);
-  const leagues = await res.json();
+  const leagueId2 = url.searchParams.get('leagueid1');
 
-  if (leagueId) {
-    return redirect(`/matchup/${userId}/${leagueId}`);
+  const { userId, userId2, leagueId } = params;
+
+  if (leagueId2) {
+    return redirect(`/matchup/${userId}/${leagueId}/${userId2}/${leagueId2}`);
   }
 
-  return {
-    leagueId,
-    leagues: leagues.map((l: any) => {
-      const { name, league_id } = l;
-      return { name, league_id };
-    })
-  };
+  const url2 = `https://api.sleeper.app/v1/user/${userId2}/leagues/nfl/2021`;
+  const res = await fetch(url2);
+  const leagues = await res.json();
+  return { leagues };
 };
-type ActionData = {
-  leagueId: string | null
-  leagues: { league_id: string, name: string }[],
-};
+
 export default function Index() {
-  const actionData = useLoaderData<ActionData>();
+  const actionData = useLoaderData();
   return (
     <form id="leagueidform">
       <label htmlFor="leagueid1">

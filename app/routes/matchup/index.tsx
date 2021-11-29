@@ -26,7 +26,6 @@ type ActionData = {
 
 export default function Index() {
   const actionData = useActionData<ActionData>();
-  console.log({ actionData });
   return (
     <div>
       <main>
