@@ -17,7 +17,8 @@
     "cy:run": "cypress run",
     "cypress:ci": "start-server-and-test dev http://localhost:3000 cy:run",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "deploy": "flyctl deploy"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
